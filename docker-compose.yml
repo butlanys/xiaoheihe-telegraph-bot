@@ -1,0 +1,13 @@
+services:
+  xiaoheihe-bot:
+    build: .
+    container_name: xiaoheihe-bot
+    # 需要 host 网络才能访问宿主机的 WARP SOCKS5 (127.0.0.1:40000)
+    # 若 PROXY_MODE=direct 可改为普通端口映射或删除本行
+    network_mode: "host"
+    env_file:
+      - .env
+    environment:
+      - PROXY_MODE=${PROXY_MODE:-direct}   # warp | direct | auto
+      - TZ=${TZ:-Asia/Shanghai}
+    restart: unless-stopped
